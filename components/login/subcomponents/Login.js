@@ -40,7 +40,7 @@ const Login = (props) => {
                     <TextInputTemplate
                         name="password"
                         type="password" />
-                    <button type="submit">Submit</button>
+                    <button type="submit">Log In</button>
                 </Form>
             </Formik>
         

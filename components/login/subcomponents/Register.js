@@ -5,16 +5,16 @@ import TextInputTemplate from 'components/utilities/forms/textinputs/TextInputTe
 import { emailSchema, passwordSchema } from 'components/utilities/forms/textinputs/textInputValidationSchemas';
 
 import { useDispatch } from 'react-redux';
-import { logIn } from 'store/auth/authReducer';
+import { registerUser } from 'store/auth/authReducer';
 
 const Register = (props) => {
 
     const dispatch = useDispatch();
-    const redirectTo = props.redirectTo;
 
     const initialValues = {
         email: "",
         password: "",
+        passwordConfirm: "",
     }
 
     return (
@@ -24,11 +24,14 @@ const Register = (props) => {
                 validationSchema={Yup.object({
                     email: emailSchema,
                     password: passwordSchema,
+                    passwordConfirm: Yup.string()
+                        .oneOf([Yup.ref('password'), null], "Must match password")
+                        .required("You must confirm your Password")
                 })}
                 onSubmit={(values, { setSubmitting }) => {
                     console.log("Email: " + values.email);
                     console.log("Password: " + values.password);
-                    dispatch(logIn({
+                    dispatch(registerUser({
                         email: values.email,
                         password: values.password, 
                     }));
@@ -37,11 +40,20 @@ const Register = (props) => {
                 <Form>
                     <TextInputTemplate
                         name="email"
-                        type="text" />
+                        type="text" 
+                        placeholder="Email Address"
+                    />
                     <TextInputTemplate
                         name="password"
-                        type="password" />
-                    <button type="submit">Submit</button>
+                        type="password" 
+                        placeholder="Password" 
+                    />
+                    <TextInputTemplate
+                        name="passwordConfirm"
+                        type="password"
+                        placeholder="Confirm Password" 
+                    />
+                    <button type="submit">Register</button>
                 </Form>
             </Formik>
         
