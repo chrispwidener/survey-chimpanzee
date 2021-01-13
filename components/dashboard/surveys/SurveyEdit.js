@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { selectSurveys } from 'store/survey/surveyReducer';
 import { selectQuestions } from 'store/survey/questions/questionReducer';
 
+import QuestionCard from './questions/QuestionCard';
+
 const SurveyEdit = (prop) => {
 
     const router = useRouter();
@@ -11,11 +13,19 @@ const SurveyEdit = (prop) => {
     const surveys = useSelector(selectSurveys);
     const survey = surveys.find(survey => survey.id == surveyID);
 
-    const questions = useSelector(selectQuestions)
+    const allQuestions = useSelector(selectQuestions)
+    const surveyQuestions = allQuestions.filter( question => {
+       return question.surveyId == survey.id;
+    })
+
+    const questionCards = surveyQuestions.map(question => {
+        return <QuestionCard question={question} key={question.id} />
+    })
 
     return (
         <div>
-           Survey:  { survey.name }
+           <p>Survey:  { survey.name }</p>
+           { questionCards }
         </div>
     );
 }
