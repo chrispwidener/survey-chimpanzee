@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectSurveys } from 'store/survey/surveyReducer';
 import { selectQuestions } from 'store/survey/questions/questionReducer';
 
-import QuestionCard from './questions/QuestionCard';
+import QuestionCard from './questions/cards/QuestionCard';
 
 const SurveyEdit = (prop) => {
 
